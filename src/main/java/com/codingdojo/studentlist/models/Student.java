@@ -1,6 +1,8 @@
 package com.codingdojo.studentlist.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "students")
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")//Esto evita la recursividad tambien
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +30,7 @@ public class Student {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updatedAt;
 
-    @JsonIgnore//Esto impide que sea bilateral la consulta o algo asi
+    //@JsonIgnore//Esto impide que sea bilateral la consulta o algo asi (Funciona para negar un campo no estoy seguro)
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Info info;
 

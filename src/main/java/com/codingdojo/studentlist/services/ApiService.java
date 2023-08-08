@@ -43,7 +43,7 @@ public class ApiService {
     //Servicios de Info
     //Obtener todas las info (Para probar, tests, no puedo hacer andar el findAll() generico para ver todas las infos, solo con Query funciona
     public List<Info> allInfos() {
-        return infoRepository.allInfos();
+        return infoRepository.findAll();
     }
     //Crear info
     public Info createInfo(Info i){

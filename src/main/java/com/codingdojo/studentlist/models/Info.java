@@ -1,5 +1,7 @@
 package com.codingdojo.studentlist.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -8,6 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "info_students")
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")//Esto evita la recursividad tambien
 public class Info {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +28,7 @@ public class Info {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updatedAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)//ACA se usa EAGER para que funcione el metodo de traer las infos genérico
     @JoinColumn(name = "student_id")
     private Student student;
 
